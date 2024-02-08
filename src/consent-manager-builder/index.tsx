@@ -6,6 +6,7 @@ import conditionallyLoadAnalytics from './analytics'
 import fetchDestinations from './fetch-destinations'
 import { loadPreferences, savePreferences } from './preferences'
 import { getConsentPreferences } from './preferences-utils'
+import { bodl } from '../bodl/Bodl'
 
 function getNewDestinations(destinations: Destination[], preferences: CategoryPreferences) {
   const newDestinations: Destination[] = []
@@ -151,6 +152,8 @@ export default class ConsentManagerBuilder extends Component<Props, State> {
     } = this.props
     // TODO: add option to run mapCustomPreferences on load so that the destination preferences automatically get updated
     let { destinationPreferences = {}, customPreferences } = loadPreferences()
+
+    bodl.emitConsentLoadedEvent(customPreferences)
 
     const [isConsentRequired, destinations] = await Promise.all([
       shouldRequireConsent(),

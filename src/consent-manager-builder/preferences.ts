@@ -4,6 +4,7 @@ import { EventEmitter } from 'events'
 import cookies from 'js-cookie'
 
 import { WindowWithAJS, Preferences, CategoryPreferences } from '../types'
+import { bodl } from '../bodl/Bodl'
 
 const COOKIE_KEY = 'tracking-preferences'
 // TODO: Make cookie expiration configurable
@@ -76,4 +77,6 @@ export function savePreferences({
     destinationPreferences,
     customPreferences
   })
+
+  bodl.emitConsentUpdatedEvent(customPreferences)
 }
